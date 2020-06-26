@@ -2,6 +2,7 @@ package com.ljf.ruleproject.ruleEngine;
 
 import com.ljf.ruleproject.entity.DBInfo;
 import com.ljf.ruleproject.entity.RuleInfo;
+import com.ljf.ruleproject.poet.Store;
 import lombok.extern.slf4j.Slf4j;
 import org.kie.api.event.process.*;
 import org.kie.api.event.rule.*;
@@ -10,6 +11,7 @@ import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ public class RuleExecutor implements Runnable {
 
     private RuleInfo ruleInfo;
 
-    public  RuleExecutor(RuleInfo ruleInfo) {
+    public RuleExecutor(RuleInfo ruleInfo) {
         this.ruleInfo = ruleInfo;
     }
 
@@ -156,7 +158,7 @@ public class RuleExecutor implements Runnable {
             }
         });
 
-        List datas = getData();
+        List<Store> datas = getData();
 
         log.info("获取到数据：{}，开始插入数据", datas.toString());
         for (Object data : datas) {
@@ -183,16 +185,7 @@ public class RuleExecutor implements Runnable {
      */
     private String getRule() {
 
-        return "import com.ljf.drools.*\n" +
-                "\n" +
-                "dialect  \"mvel\"\n" +
-                "\n" +
-                "rule \"age\"\n" +
-                "    when\n" +
-                "        $person: Person(age<16||age>50)\n" +
-                "    then\n" +
-                "        System.out.println(\"fail\");\n" +
-                "end\n";
+        return ruleInfo.getRule();
     }
 
     /**
@@ -203,10 +196,7 @@ public class RuleExecutor implements Runnable {
      * @return
      */
     private List getData() {
-
-        getDataFromDB(ruleInfo.getInputDataDBInfo());
-        getDataFromCache();
-        return null;
+        return getDataFromDB(ruleInfo.getInputDataDBInfo());
     }
 
     /**
@@ -220,21 +210,44 @@ public class RuleExecutor implements Runnable {
         Connection dbConn = getDBConnection(dbInfo);
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = dbConn.prepareStatement("sql");
+            preparedStatement = dbConn.prepareStatement(dbInfo.getSql());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        ResultSet resultSet = null;
         try {
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+        if (resultSet == null) {
+            return null;
         }
         //ResultSet 转实体类
-
-
-        return null;
+        List dataList = new ArrayList();
+        try {
+            while (resultSet.next()) {
+                Store data = new Store();
+                data.setId(resultSet.getString("id"));
+                data.setSignValue(resultSet.getInt("sign_value"));
+                data.setAttribute(resultSet.getString("attribute"));
+                data.setFigure(resultSet.getString("figure"));
+                data.setSize(resultSet.getString("size"));
+                data.setSales(resultSet.getInt("sales"));
+                data.setReturns(resultSet.getInt("returns"));
+                dataList.add(data);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return dataList;
     }
 
+    /**
+     * //todo 后期缓存使用
+     *
+     * @return
+     */
     private List getDataFromCache() {
 
         return null;
@@ -276,13 +289,26 @@ public class RuleExecutor implements Runnable {
      *
      * @param datas 结果数据
      */
-    private void saveData(List datas) {
+    private void saveData(List<Store> datas) {
 
         Connection dbConn = getDBConnection(ruleInfo.getOutputDataDBInfo());
         PreparedStatement preparedStatement = null;
 
+
         try {
-            preparedStatement = dbConn.prepareStatement("sql");
+            StringBuilder sql = new StringBuilder();
+
+            for (Store store : datas) {
+                StringBuilder sqlItem = new StringBuilder(ruleInfo.getOutputDataDBInfo().getSql());
+                sqlItem.append(" set integral = ")
+                        .append(store.getIntegral())
+                        .append(" where id = ")
+                        .append(store.getId())
+                        .append(";")
+                        .append("\n");
+                sql.append(sqlItem);
+            }
+            preparedStatement = dbConn.prepareStatement(sql.toString());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
