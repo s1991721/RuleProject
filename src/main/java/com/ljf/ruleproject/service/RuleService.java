@@ -11,4 +11,6 @@ public interface RuleService {
 
     List<RuleInfo> findAll();
 
+    RuleInfo getById(Integer id);
+
 }

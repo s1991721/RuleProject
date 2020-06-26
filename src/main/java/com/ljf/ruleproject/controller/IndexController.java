@@ -8,8 +8,10 @@ import com.ljf.ruleproject.service.RuleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by mr.lin on 2020/6/24
@@ -44,7 +46,7 @@ public class IndexController {
                 "        update($store)\n" +
                 "end\n");
 
-        DBInfo inDBInfo=new DBInfo();
+        DBInfo inDBInfo = new DBInfo();
         inDBInfo.setDriverName("com.hxtt.sql.access.AccessDriver");
         inDBInfo.setDbURL("jdbc:Access:///D:/store.accdb");
         inDBInfo.setUserName("");
@@ -52,7 +54,7 @@ public class IndexController {
         inDBInfo.setSql("select * from store;");
         ruleInfo.setInputDataDBInfo(inDBInfo);
 
-        DBInfo outDBInfo=new DBInfo();
+        DBInfo outDBInfo = new DBInfo();
         outDBInfo.setDriverName("com.hxtt.sql.access.AccessDriver");
         outDBInfo.setDbURL("jdbc:Access:///D:/store.accdb");
         outDBInfo.setUserName("");
@@ -88,7 +90,7 @@ public class IndexController {
                 "        update($store)\n" +
                 "end\n");
 
-        DBInfo inDBInfo=new DBInfo();
+        DBInfo inDBInfo = new DBInfo();
         inDBInfo.setDriverName("com.hxtt.sql.access.AccessDriver");
         inDBInfo.setDbURL("jdbc:Access:///D:/store.accdb");
         inDBInfo.setUserName("");
@@ -96,7 +98,7 @@ public class IndexController {
         inDBInfo.setSql("select * from store;");
         ruleInfo.setInputDataDBInfo(inDBInfo);
 
-        DBInfo outDBInfo=new DBInfo();
+        DBInfo outDBInfo = new DBInfo();
         outDBInfo.setDriverName("com.hxtt.sql.access.AccessDriver");
         outDBInfo.setDbURL("jdbc:Access:///D:/store.accdb");
         outDBInfo.setUserName("");
@@ -109,8 +111,17 @@ public class IndexController {
 
     @GetMapping("/index")
     public String index(Model model) {
-        model.addAttribute("ruleList", ruleService.findAll());
+        List<RuleInfo> ruleInfoList = ruleService.findAll();
+        model.addAttribute("ruleList", ruleInfoList);
         return "edit";
     }
+
+    @GetMapping("/index/{id}")
+    public String index(Model model, @PathVariable(value = "id") int id) {
+        RuleInfo ruleInfo = ruleService.getById(id);
+        model.addAttribute("rule", ruleInfo);
+        return "detail";
+    }
+
 
 }

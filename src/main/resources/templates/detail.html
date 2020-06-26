@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="row-fluid">
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">规则脚本</label>
+            <textarea style="width: 100% " th:text="${rule.getRule()}">
+                            </textarea>
+        </div>
+        <div class="control-group">
+            <label class="control-label">规则描述</label>
+            <div class="controls">
+                <input id="desc" type="text" th:value="${rule.getDesc()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">规则版本</label>
+            <div class="controls">
+                <input id="version" type="text" th:value="${rule.getVersion()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">DBDriver</label>
+            <div class="controls">
+                <input id="dbdriver" type="text" th:value="${rule.getInputDataDBInfo().getDriverName()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">URL</label>
+            <div class="controls">
+                <input id="url" type="text" th:value="${rule.getInputDataDBInfo().getDbURL()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">name</label>
+            <div class="controls">
+                <input id="name" type="text" th:value="${rule.getInputDataDBInfo().getUserName()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">password</label>
+            <div class="controls">
+                <input id="password" type="text" th:value="${rule.getInputDataDBInfo().getUserPwd()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">SQL</label>
+            <div class="controls">
+                <input id="sql" type="text" th:value="${rule.getInputDataDBInfo().getSql()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn" type="submit">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

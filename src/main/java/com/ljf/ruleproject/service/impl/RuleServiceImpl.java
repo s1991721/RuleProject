@@ -21,4 +21,9 @@ public class RuleServiceImpl implements RuleService {
     public List<RuleInfo> findAll() {
         return ruleInfoDao.findAll();
     }
+
+    @Override
+    public RuleInfo getById(Integer id) {
+        return ruleInfoDao.getById(id);
+    }
 }

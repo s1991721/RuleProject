@@ -75,4 +75,45 @@ public class RuleInfoDao {
         }
         return ruleInfoList;
     }
+
+    public RuleInfo getById(Integer id) {
+        RuleInfo ruleInfo = null;
+        try {
+            Statement sta = null;
+            sta = con.createStatement();
+
+            ResultSet rst = null;//demoTable为access数据库中的一个表名
+
+            rst = sta.executeQuery("select * from rule_info where id =" + id);
+
+            if (rst.next()) {
+                ruleInfo = new RuleInfo();
+                ruleInfo.setId(rst.getInt("id"));
+                ruleInfo.setRule(rst.getString("rule"));
+                ruleInfo.setVersion(rst.getString("version"));
+                ruleInfo.setDesc(rst.getString("desc"));
+
+                DBInfo inputDBInfo = new DBInfo();
+                inputDBInfo.setDriverName(rst.getString("in_driver_name"));
+                inputDBInfo.setDbURL(rst.getString("in_dburl"));
+                inputDBInfo.setUserName(rst.getString("in_user_name"));
+                inputDBInfo.setUserPwd(rst.getString("in_user_password"));
+                inputDBInfo.setSql(rst.getString("in_sql"));
+                ruleInfo.setInputDataDBInfo(inputDBInfo);
+
+                DBInfo outputDBInfo = new DBInfo();
+                outputDBInfo.setDriverName(rst.getString("out_driver_name"));
+                outputDBInfo.setDbURL(rst.getString("out_dburl"));
+                outputDBInfo.setUserName(rst.getString("out_user_name"));
+                outputDBInfo.setUserPwd(rst.getString("out_user_password"));
+                outputDBInfo.setSql(rst.getString("out_sql"));
+                ruleInfo.setOutputDataDBInfo(outputDBInfo);
+
+            }
+        } catch (SQLException throwables) {
+
+            throwables.printStackTrace();
+        }
+        return ruleInfo;
+    }
 }

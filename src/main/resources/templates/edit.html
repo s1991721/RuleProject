@@ -10,130 +10,39 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>
-                            编号
-                        </th>
-                        <th>
-                            规则描述
-                        </th>
-                        <th>
-                            规则版本
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="info" th:each="rule : ${ruleList}">
-                        <td th:text="${rule.id}">
-                            编号
-                        </td>
-                        <td th:text="${rule.desc}">
-                            规则描述
-                        </td>
-                        <td th:text="${rule.version}">
-                            规则版本
-                        </td>
-
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
     <div class="row-fluid">
         <div class="span12">
-            <form class="form-horizontal">
-                <div class="control-group">
-                    <label class="control-label">规则脚本</label>
-                    <div class="controls">
-                        <input id="rule" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">版本号</label>
-                    <div class="controls">
-                        <input id="versio" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">规则描述</label>
-                    <div class="controls">
-                        <input id="desc" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输入数据源驱动</label>
-                    <div class="controls">
-                        <input id="in_driver_name" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输入数据源url</label>
-                    <div class="controls">
-                        <input id="in_url" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输入数据源账号</label>
-                    <div class="controls">
-                        <input id="in_user_name" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输入数据源密码</label>
-                    <div class="controls">
-                        <input id="in_user_psw" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输入数据源sql</label>
-                    <div class="controls">
-                        <input id="in_sql" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输出数据源驱动</label>
-                    <div class="controls">
-                        <input id="out_driver_name" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输出数据源url</label>
-                    <div class="controls">
-                        <input id="out_url" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输出数据源账号</label>
-                    <div class="controls">
-                        <input id="out_user_name" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输出数据源密码</label>
-                    <div class="controls">
-                        <input id="out_user_psw" type="text"/>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">输出数据源sql</label>
-                    <div class="controls">
-                        <input id="out_sql" type="text"/>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <button class="btn" type="submit">保存</button>
-                    </div>
-                </div>
-            </form>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        编号
+                    </th>
+                    <th>
+                        规则描述
+                    </th>
+                    <th>
+                        版本号
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="info" th:each="rule:${ruleList}" th:href="@{'/index/'+${rule.id}}">
+                    <td th:text="${rule.id}">
+                        4
+                    </td>
+                    <td th:text="${rule.desc}">
+                        TB - Monthly
+                    </td>
+                    <td th:text="${rule.version}">
+                        04/04/2012
+                    </td>
+                    <td>
+                        <a th:href="@{'/index/'+${rule.id}}">查看</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
