@@ -45,7 +45,7 @@ public class RuleInfoDao {
             rst = sta.executeQuery("select * from rule_info");
 
 
-            if (rst.next()) {
+            while (rst.next()) {
                 RuleInfo ruleInfo = new RuleInfo();
                 ruleInfo.setId(rst.getInt("id"));
                 ruleInfo.setRule(rst.getString("rule"));
