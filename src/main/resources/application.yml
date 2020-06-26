@@ -1,8 +1,8 @@
 spring:
   thymeleaf:
-    enabled: true  #¿ªÆôthymeleafÊÓÍ¼½âÎö
-    encoding: utf-8  #±àÂë
-    prefix: classpath:/templates/  #Ç°×º
-    cache: false  #ÊÇ·ñÊ¹ÓÃ»º´æ
-    mode: HTML  #ÑÏ¸ñµÄHTMLÓï·¨Ä£Ê½
-    suffix: .html  #ºó×ºÃû
+    enabled: true  #å¼€å¯thymeleafè§†å›¾è§£æ
+    encoding: utf-8  #ç¼–ç 
+    prefix: classpath:/templates/  #å‰ç¼€
+    cache: false  #æ˜¯å¦ä½¿ç”¨ç¼“å­˜
+    mode: HTML  #ä¸¥æ ¼çš„HTMLè¯­æ³•æ¨¡å¼
+    suffix: .html  #åç¼€å

@@ -1,4 +1,4 @@
-package com.ljf.ruleproject.ruleEngine;
+package com.ljf.ruleproject.entity;
 
 import lombok.Data;
 

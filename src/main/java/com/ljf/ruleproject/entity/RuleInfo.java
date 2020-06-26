@@ -1,4 +1,4 @@
-package com.ljf.ruleproject.ruleEngine;
+package com.ljf.ruleproject.entity;
 
 import lombok.Data;
 
@@ -8,7 +8,13 @@ import lombok.Data;
 @Data
 public class RuleInfo {
 
-    private DBInfo ruleDBInfo;
+    private Integer id;
+
+    private String rule;
+
+    private String version;
+
+    private String desc;
 
     private DBInfo inputDataDBInfo;
 

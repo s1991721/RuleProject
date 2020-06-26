@@ -1,10 +1,10 @@
 package com.ljf.ruleproject.controller;
 
-import com.ljf.ruleproject.ruleEngine.RuleExecutor;
-import com.ljf.ruleproject.ruleEngine.RuleInfo;
-import com.ljf.ruleproject.ruleEngine.RuleThreadPool;
+import com.ljf.ruleproject.service.RuleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.annotation.Resource;
 
 /**
  * Created by mr.lin on 2020/6/24
@@ -12,16 +12,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
+    @Resource
+    private RuleService ruleService;
+
     @GetMapping("home")
     public String index() {
-
-
-        RuleThreadPool.submit(new RuleExecutor(new RuleInfo()));
 
 
         return "index";
     }
 
-    
+    @GetMapping("/get")
+    public String get() {
+        System.out.println(ruleService.findAll().toString());
+        return "index";
+    }
 
 }

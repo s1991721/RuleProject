@@ -1,5 +1,7 @@
 package com.ljf.ruleproject.ruleEngine;
 
+import com.ljf.ruleproject.entity.DBInfo;
+import com.ljf.ruleproject.entity.RuleInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.kie.api.event.process.*;
 import org.kie.api.event.rule.*;
@@ -18,7 +20,7 @@ public class RuleExecutor implements Runnable {
 
     private RuleInfo ruleInfo;
 
-    public RuleExecutor(RuleInfo ruleInfo) {
+    public  RuleExecutor(RuleInfo ruleInfo) {
         this.ruleInfo = ruleInfo;
     }
 
@@ -180,7 +182,6 @@ public class RuleExecutor implements Runnable {
      * @return
      */
     private String getRule() {
-        getDataFromDB(ruleInfo.getRuleDBInfo());
 
         return "import com.ljf.drools.*\n" +
                 "\n" +
