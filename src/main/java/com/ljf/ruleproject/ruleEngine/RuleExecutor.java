@@ -34,7 +34,7 @@ public class RuleExecutor implements Runnable {
         String rule = getRule();
 
         log.info("获取到规则：{}", rule);
-        WebSocketServer.sendInfo("获取到规则：{}" + rule, String.valueOf(ruleInfo.getId()));
+        WebSocketServer.sendInfo("获取到规则", String.valueOf(ruleInfo.getId()));
         KieHelper helper = new KieHelper();
 
         helper.addContent(rule, ResourceType.DRL);
@@ -164,7 +164,7 @@ public class RuleExecutor implements Runnable {
         List<Store> datas = getData();
 
         log.info("获取到数据：{}，开始插入数据", datas.toString());
-        WebSocketServer.sendInfo("获取到数据：{}，开始插入数据", String.valueOf(ruleInfo.getId()));
+        WebSocketServer.sendInfo("获取到数据，开始插入数据", String.valueOf(ruleInfo.getId()));
         for (Object data : datas) {
             ksession.insert(data);
         }
