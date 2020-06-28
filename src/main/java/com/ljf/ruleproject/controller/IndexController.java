@@ -144,7 +144,9 @@ public class IndexController {
     @GetMapping("/execute/{id}")
     public String execute(Model model, @PathVariable(value = "id") int id){
         RuleInfo ruleInfo = ruleService.getById(id);
-        RuleThreadPool.submit(new RuleExecutor(ruleInfo));
+        model.addAttribute("ruleInfo",ruleInfo);
         return "execute";
     }
+
+
 }

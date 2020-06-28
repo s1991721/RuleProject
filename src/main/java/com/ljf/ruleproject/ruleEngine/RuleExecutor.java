@@ -3,6 +3,7 @@ package com.ljf.ruleproject.ruleEngine;
 import com.ljf.ruleproject.entity.DBInfo;
 import com.ljf.ruleproject.entity.RuleInfo;
 import com.ljf.ruleproject.poet.Store;
+import com.ljf.ruleproject.ws.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 import org.kie.api.event.process.*;
 import org.kie.api.event.rule.*;
@@ -29,9 +30,11 @@ public class RuleExecutor implements Runnable {
     @Override
     public void run() {
         log.info("规则开始执行");
+        WebSocketServer.sendInfo("规则开始执行", String.valueOf(ruleInfo.getId()));
         String rule = getRule();
 
         log.info("获取到规则：{}", rule);
+        WebSocketServer.sendInfo("获取到规则：{}" + rule, String.valueOf(ruleInfo.getId()));
         KieHelper helper = new KieHelper();
 
         helper.addContent(rule, ResourceType.DRL);
@@ -161,21 +164,27 @@ public class RuleExecutor implements Runnable {
         List<Store> datas = getData();
 
         log.info("获取到数据：{}，开始插入数据", datas.toString());
+        WebSocketServer.sendInfo("获取到数据：{}，开始插入数据", String.valueOf(ruleInfo.getId()));
         for (Object data : datas) {
             ksession.insert(data);
         }
 
         log.info("插入数据完成");
+        WebSocketServer.sendInfo("插入数据完成", String.valueOf(ruleInfo.getId()));
         log.info("执行规则开始");
+        WebSocketServer.sendInfo("执行规则开始", String.valueOf(ruleInfo.getId()));
         ksession.fireAllRules();
 
         log.info("执行规则结束");
+        WebSocketServer.sendInfo("执行规则结束", String.valueOf(ruleInfo.getId()));
         ksession.dispose();
 
         log.info("结果存库开始");
+        WebSocketServer.sendInfo("结果存库开始", String.valueOf(ruleInfo.getId()));
         saveData(datas);
 
         log.info("结果存库结束");
+        WebSocketServer.sendInfo("结果存库结束", String.valueOf(ruleInfo.getId()));
     }
 
     /**
