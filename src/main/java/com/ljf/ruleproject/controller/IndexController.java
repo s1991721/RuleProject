@@ -125,13 +125,11 @@ public class IndexController {
         return "detail";
     }
 
-
     @GetMapping("/add")
     public String add(Model model) {
         model.addAttribute("ruleInfo", new RuleInfo());
         return "add";
     }
-
 
     @PostMapping("/add")
     public String add(@ModelAttribute RuleInfo ruleInfo, Model model) {
@@ -141,5 +139,12 @@ public class IndexController {
             model.addAttribute("status", "失败");
         }
         return "status";
+    }
+
+    @GetMapping("/execute/{id}")
+    public String execute(Model model, @PathVariable(value = "id") int id){
+        RuleInfo ruleInfo = ruleService.getById(id);
+        RuleThreadPool.submit(new RuleExecutor(ruleInfo));
+        return "execute";
     }
 }

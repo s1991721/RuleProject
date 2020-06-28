@@ -98,7 +98,7 @@
         </div>
     </form>
 
-    <a th:href="${rule.getId()}">执行该规则</a>
+    <a th:href="@{'/execute/'+${rule.id}}">执行该规则</a>
 </div>
 </body>
 </html>
