@@ -30,41 +30,75 @@
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label">DBDriver</label>
+            <label class="control-label">IN_DBDriver</label>
             <div class="controls">
-                <input id="dbdriver" type="text" th:value="${rule.getInputDataDBInfo().getDriverName()}"/>
+                <input id="in_dbdriver" type="text" th:value="${rule.getInputDataDBInfo().getDriverName()}"/>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label">URL</label>
+            <label class="control-label">IN_URL</label>
             <div class="controls">
-                <input id="url" type="text" th:value="${rule.getInputDataDBInfo().getDbURL()}"/>
+                <input id="in_url" type="text" th:value="${rule.getInputDataDBInfo().getDbURL()}"/>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label">name</label>
+            <label class="control-label">IN_name</label>
             <div class="controls">
-                <input id="name" type="text" th:value="${rule.getInputDataDBInfo().getUserName()}"/>
+                <input id="in_name" type="text" th:value="${rule.getInputDataDBInfo().getUserName()}"/>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label">password</label>
+            <label class="control-label">IN_password</label>
             <div class="controls">
-                <input id="password" type="text" th:value="${rule.getInputDataDBInfo().getUserPwd()}"/>
+                <input id="in_password" type="text" th:value="${rule.getInputDataDBInfo().getUserPwd()}"/>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label">SQL</label>
+            <label class="control-label">IN_SQL</label>
             <div class="controls">
-                <input id="sql" type="text" th:value="${rule.getInputDataDBInfo().getSql()}"/>
+                <input id="in_sql" type="text" th:value="${rule.getInputDataDBInfo().getSql()}"/>
+            </div>
+        </div>
+
+
+        <div class="control-group">
+            <label class="control-label">OUT_DBDriver</label>
+            <div class="controls">
+                <input id="out_dbdriver" type="text" th:value="${rule.getOutputDataDBInfo().getDriverName()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">OUT_URL</label>
+            <div class="controls">
+                <input id="out_url" type="text" th:value="${rule.getOutputDataDBInfo().getDbURL()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">OUT_name</label>
+            <div class="controls">
+                <input id="out_name" type="text" th:value="${rule.getOutputDataDBInfo().getUserName()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">OUT_password</label>
+            <div class="controls">
+                <input id="out_password" type="text" th:value="${rule.getOutputDataDBInfo().getUserPwd()}"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">OUT_SQL</label>
+            <div class="controls">
+                <input id="out_sql" type="text" th:value="${rule.getOutputDataDBInfo().getSql()}"/>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
-                <button class="btn" type="submit">保存</button>
+                <button class="btn" disabled type="submit">保存</button>
             </div>
         </div>
     </form>
+
+    <a th:href="${rule.getId()}">执行该规则</a>
 </div>
 </body>
 </html>
