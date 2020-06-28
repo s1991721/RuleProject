@@ -248,6 +248,14 @@ public class RuleExecutor implements Runnable {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            try {
+                resultSet.close();
+                preparedStatement.close();
+                dbConn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return dataList;
     }
@@ -326,6 +334,13 @@ public class RuleExecutor implements Runnable {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } finally {
+            try {
+                preparedStatement.close();
+                dbConn.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 
