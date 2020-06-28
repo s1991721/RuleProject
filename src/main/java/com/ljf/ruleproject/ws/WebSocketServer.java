@@ -86,48 +86,6 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         log.info("用户消息:" + userId + ",报文:" + message);
-
-        RuleInfo ruleInfo1 = new RuleInfo();
-        ruleInfo1.setId(0);
-        ruleInfo1.setDesc("积分兑换规则");
-        ruleInfo1.setVersion("1.0");
-        ruleInfo1.setRule("import com.ljf.ruleproject.poet.*;\n" +
-                "\n" +
-                "dialect  \"mvel\"\n" +
-                "\n" +
-                "rule \"reward\"\n" +
-                "    when\n" +
-                "        $store: Store(\n" +
-                "        attribute==\"CAC\", //店铺属性\n" +
-                "        signValue>300,// 签约量大于签约级别值\n" +
-                "        figure==\"CS900\",// 花纹匹配\n" +
-                "        size==\"R20\", //寸别匹配\n" +
-                "        sales>50 //销量>签约标准\n" +
-                "        )\n" +
-                "    then\n" +
-                "        Integer sum =$store.getSales()*5;\n" +
-                "        Integer integral=sum*50/$store.getSales();\n" +
-                "        integral=integral-$store.getReturns()*6;\n" +
-                "        $store.setIntegral(integral);\n" +
-                "        update($store)\n" +
-                "end\n");
-
-        DBInfo inDBInfo = new DBInfo();
-        inDBInfo.setDriverName("com.hxtt.sql.access.AccessDriver");
-        inDBInfo.setDbURL("jdbc:Access:///D:/store.accdb");
-        inDBInfo.setUserName("");
-        inDBInfo.setUserPwd("");
-        inDBInfo.setSql("select * from store;");
-        ruleInfo1.setInputDataDBInfo(inDBInfo);
-
-        DBInfo outDBInfo = new DBInfo();
-        outDBInfo.setDriverName("com.hxtt.sql.access.AccessDriver");
-        outDBInfo.setDbURL("jdbc:Access:///D:/store.accdb");
-        outDBInfo.setUserName("");
-        outDBInfo.setUserPwd("");
-        outDBInfo.setSql("update store");
-        ruleInfo1.setOutputDataDBInfo(outDBInfo);
-        RuleThreadPool.submit(new RuleExecutor(ruleInfo1));
     }
 
     /**

@@ -7,10 +7,7 @@ import com.ljf.ruleproject.ruleEngine.RuleThreadPool;
 import com.ljf.ruleproject.service.RuleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -147,6 +144,16 @@ public class IndexController {
         model.addAttribute("ruleInfo",ruleInfo);
         return "execute";
     }
+
+    @GetMapping("/realExecute/{id}")
+    @ResponseBody
+    public void realExecute(Model model, @PathVariable(value = "id") int id){
+        RuleInfo ruleInfo = ruleService.getById(id);
+        RuleThreadPool.submit(new RuleExecutor(ruleInfo));
+    }
+
+
+
 
 
 }

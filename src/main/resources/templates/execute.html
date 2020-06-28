@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>规则执行</title>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 </head>
 <p>
 
@@ -15,7 +16,7 @@
 
 </body>
 
-<script>
+<script type="text/javascript">
     var socket;
 
     function openSocket() {
@@ -58,7 +59,10 @@
     }
 
     function execute() {
-        socket.send("执行规则：" + document.getElementById('id').value)
+        $.ajax({
+            url: "/realExecute/" + document.getElementById('id').value,
+            type: "get"
+        })
     }
 
     function crNode(str) {
