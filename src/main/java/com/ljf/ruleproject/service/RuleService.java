@@ -13,4 +13,6 @@ public interface RuleService {
 
     RuleInfo getById(Integer id);
 
+    Integer add(RuleInfo ruleInfo);
+
 }

@@ -26,4 +26,9 @@ public class RuleServiceImpl implements RuleService {
     public RuleInfo getById(Integer id) {
         return ruleInfoDao.getById(id);
     }
+
+    @Override
+    public Integer add(RuleInfo ruleInfo) {
+        return ruleInfoDao.insert(ruleInfo);
+    }
 }

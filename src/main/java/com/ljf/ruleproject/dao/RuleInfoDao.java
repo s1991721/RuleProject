@@ -116,4 +116,35 @@ public class RuleInfoDao {
         }
         return ruleInfo;
     }
+
+    public static void main(String[] args) {
+        RuleInfo ruleInfo = new RuleInfo();
+        ruleInfo.setId(8);
+        ruleInfo.setRule("aaa");
+        ruleInfo.setVersion("bbb");
+        ruleInfo.setDesc("ccc");
+
+        DBInfo inDBInfo = new DBInfo();
+        inDBInfo.setDriverName("ddd");
+        inDBInfo.setDbURL("eee");
+        inDBInfo.setUserName("fff");
+        inDBInfo.setUserPwd("ggg");
+        inDBInfo.setSql("hhh");
+        ruleInfo.setInputDataDBInfo(inDBInfo);
+
+        DBInfo outDBInfo = new DBInfo();
+        outDBInfo.setDriverName("iii");
+        outDBInfo.setDbURL("jjj");
+        outDBInfo.setUserName("kkk");
+        outDBInfo.setUserPwd("lll");
+        outDBInfo.setSql("mmm");
+        ruleInfo.setOutputDataDBInfo(outDBInfo);
+
+        RuleInfoDao ruleInfoDao = new RuleInfoDao();
+        ruleInfoDao.insert(ruleInfo);
+    }
+
+    public int insert(RuleInfo ruleInfo) {
+        return 1;
+    }
 }

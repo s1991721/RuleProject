@@ -8,7 +8,9 @@ import com.ljf.ruleproject.service.RuleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -124,4 +126,20 @@ public class IndexController {
     }
 
 
+    @GetMapping("/add")
+    public String add(Model model) {
+        model.addAttribute("ruleInfo", new RuleInfo());
+        return "add";
+    }
+
+
+    @PostMapping("/add")
+    public String add(@ModelAttribute RuleInfo ruleInfo, Model model) {
+        if (ruleService.add(ruleInfo) != 0) {
+            model.addAttribute("status", "成功");
+        } else {
+            model.addAttribute("status", "失败");
+        }
+        return "status";
+    }
 }
