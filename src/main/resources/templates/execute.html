@@ -7,17 +7,18 @@
 </head>
 <p>
 
-<h2 id="h">状态信息</h2>
 <p th:text="${ruleInfo.desc}">
-<div><input id="id" type="text" th:value="${ruleInfo.id}"></div>
-<button id="bt" onclick="openSocket()">连接服务器</button>
+<div><input id="id" type="text" th:value="${ruleInfo.id}">
+    <button id="bt" onclick="openSocket()">连接服务器</button>
+</div>
 <br>
 <button onclick="execute()">执行规则</button>
 
+<h2 id="h">状态信息</h2>
 </body>
 
 <script type="text/javascript">
-    var socket;
+    let socket;
 
     function openSocket() {
         if (typeof (WebSocket) == "undefined") {
