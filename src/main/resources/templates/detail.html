@@ -58,7 +58,7 @@
         <td>IN_SQL</td>
         <td colspan="3">
             <textarea name="remarks" class="mini-textarea" style="width:100%;height:60px;"
-                      th:value="${rule.getInputDataDBInfo().getSql()}"> </textarea>
+                      th:text="${rule.getInputDataDBInfo().getSql()}"> </textarea>
         </td>
     </tr>
 
@@ -90,7 +90,7 @@
         <td>OUT_SQL</td>
         <td colspan="3">
             <textarea name="remarks" class="mini-textarea" style="width:100%;height:60px;"
-                      th:value="${rule.getOutputDataDBInfo().getSql()}"> </textarea>
+                      th:text="${rule.getOutputDataDBInfo().getSql()}"> </textarea>
         </td>
     </tr>
 </table>
