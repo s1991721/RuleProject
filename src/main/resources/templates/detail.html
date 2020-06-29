@@ -10,95 +10,92 @@
 
 </head>
 <body>
-<div class="row-fluid">
-    <form class="form-horizontal">
-        <div class="control-group">
-            <label class="control-label">规则脚本</label>
-            <textarea style="width: 100% ;height: 400px" th:text="${rule.getRule()}">
-                            </textarea>
-        </div>
-        <div class="control-group">
-            <label class="control-label">规则描述</label>
-            <div class="controls">
-                <input id="desc" type="text" th:value="${rule.getDesc()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">规则版本</label>
-            <div class="controls">
-                <input id="version" type="text" th:value="${rule.getVersion()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">IN_DBDriver</label>
-            <div class="controls">
-                <input id="in_dbdriver" type="text" th:value="${rule.getInputDataDBInfo().getDriverName()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">IN_URL</label>
-            <div class="controls">
-                <input id="in_url" type="text" th:value="${rule.getInputDataDBInfo().getDbURL()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">IN_name</label>
-            <div class="controls">
-                <input id="in_name" type="text" th:value="${rule.getInputDataDBInfo().getUserName()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">IN_password</label>
-            <div class="controls">
-                <input id="in_password" type="text" th:value="${rule.getInputDataDBInfo().getUserPwd()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">IN_SQL</label>
-            <div class="controls">
-                <input id="in_sql" type="text" th:value="${rule.getInputDataDBInfo().getSql()}"/>
-            </div>
-        </div>
 
+<table border="0" cellpadding="15" cellspacing="15"
+       style="width:100%;table-layout:fixed;border-collapse: separate;border-spacing: 10px;">
+    <tr>
+        <td style="width:60px;">规则描述</td>
+        <td style="width:50%">
+            <input name="name" class="mini-textbox" style="width:100%;" th:value="${rule.getDesc()}"/>
+        </td>
+        <td style="width:60px;">规则版本</td>
+        <td style="width:50%">
+            <input name="addr" class="mini-textbox" style="width:100%;" th:value="${rule.getVersion()}"/>
+        </td>
+    </tr>
+    <tr>
+        <td>规则脚本</td>
+        <td colspan="3">
+            <textarea name="remarks" class="mini-textarea" style="width:100%;height:400px;"
+                      th:text="${rule.getRule()}"> </textarea>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:60px;">IN_DBDriver</td>
+        <td style="width:50%">
+            <input name="name" class="mini-textbox" style="width:100%;"
+                   th:value="${rule.getInputDataDBInfo().getDriverName()}"/>
+        </td>
+        <td style="width:60px;">IN_URL</td>
+        <td style="width:50%">
+            <input name="addr" class="mini-textbox" style="width:100%;"
+                   th:value="${rule.getInputDataDBInfo().getDbURL()}"/>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:60px;">IN_name</td>
+        <td style="width:50%">
+            <input name="name" class="mini-textbox" style="width:100%;"
+                   th:value="${rule.getInputDataDBInfo().getUserName()}"/>
+        </td>
+        <td style="width:60px;">IN_password</td>
+        <td style="width:50%">
+            <input name="addr" class="mini-textbox" style="width:100%;"
+                   th:value="${rule.getInputDataDBInfo().getUserPwd()}"/>
+        </td>
+    </tr>
+    <tr>
+        <td>IN_SQL</td>
+        <td colspan="3">
+            <textarea name="remarks" class="mini-textarea" style="width:100%;height:60px;"
+                      th:value="${rule.getInputDataDBInfo().getSql()}"> </textarea>
+        </td>
+    </tr>
 
-        <div class="control-group">
-            <label class="control-label">OUT_DBDriver</label>
-            <div class="controls">
-                <input id="out_dbdriver" type="text" th:value="${rule.getOutputDataDBInfo().getDriverName()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">OUT_URL</label>
-            <div class="controls">
-                <input id="out_url" type="text" th:value="${rule.getOutputDataDBInfo().getDbURL()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">OUT_name</label>
-            <div class="controls">
-                <input id="out_name" type="text" th:value="${rule.getOutputDataDBInfo().getUserName()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">OUT_password</label>
-            <div class="controls">
-                <input id="out_password" type="text" th:value="${rule.getOutputDataDBInfo().getUserPwd()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">OUT_SQL</label>
-            <div class="controls">
-                <input id="out_sql" type="text" th:value="${rule.getOutputDataDBInfo().getSql()}"/>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <button class="btn" disabled type="submit">保存</button>
-            </div>
-        </div>
-    </form>
+    <tr>
+        <td style="width:60px;">OUT_DBDriver</td>
+        <td style="width:50%">
+            <input name="name" class="mini-textbox" style="width:100%;"
+                   th:value="${rule.getOutputDataDBInfo().getDriverName()}"/>
+        </td>
+        <td style="width:60px;">OUT_URL</td>
+        <td style="width:50%">
+            <input name="addr" class="mini-textbox" style="width:100%;"
+                   th:value="${rule.getOutputDataDBInfo().getDbURL()}"/>
+        </td>
+    </tr>
+    <tr>
+        <td style="width:60px;">OUT_name</td>
+        <td style="width:50%">
+            <input name="name" class="mini-textbox" style="width:100%;"
+                   th:value="${rule.getOutputDataDBInfo().getUserName()}"/>
+        </td>
+        <td style="width:60px;">OUT_password</td>
+        <td style="width:50%">
+            <input name="addr" class="mini-textbox" style="width:100%;"
+                   th:value="${rule.getOutputDataDBInfo().getUserPwd()}"/>
+        </td>
+    </tr>
+    <tr>
+        <td>OUT_SQL</td>
+        <td colspan="3">
+            <textarea name="remarks" class="mini-textarea" style="width:100%;height:60px;"
+                      th:value="${rule.getOutputDataDBInfo().getSql()}"> </textarea>
+        </td>
+    </tr>
+</table>
 
-    <a th:href="@{'/execute/'+${rule.id}}">执行该规则</a>
-</div>
+<a th:href="@{'/execute/'+${rule.id}}">执行该规则</a>
+
 </body>
 </html>
