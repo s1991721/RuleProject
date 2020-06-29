@@ -27,14 +27,18 @@ public class RuleExecutor implements Runnable {
         this.ruleInfo = ruleInfo;
     }
 
+    private void sendInfo(String msg){
+        log.info(msg);
+        WebSocketServer.sendInfo(msg, String.valueOf(ruleInfo.getId()));
+    }
+
     @Override
     public void run() {
-        log.info("规则开始执行");
-        WebSocketServer.sendInfo("规则开始执行", String.valueOf(ruleInfo.getId()));
+        sendInfo("规则开始执行");
         String rule = getRule();
 
-        log.info("获取到规则：{}", rule);
-        WebSocketServer.sendInfo("获取到规则", String.valueOf(ruleInfo.getId()));
+        sendInfo("获取到规则:");
+        sendInfo(rule);
         KieHelper helper = new KieHelper();
 
         helper.addContent(rule, ResourceType.DRL);
@@ -163,28 +167,23 @@ public class RuleExecutor implements Runnable {
 
         List<Store> datas = getData();
 
-        log.info("获取到数据：{}，开始插入数据", datas.toString());
-        WebSocketServer.sendInfo("获取到数据，开始插入数据", String.valueOf(ruleInfo.getId()));
+        sendInfo("获取到数据，开始插入数据");
         for (Object data : datas) {
             ksession.insert(data);
+            sendInfo(data.toString());
         }
 
-        log.info("插入数据完成");
-        WebSocketServer.sendInfo("插入数据完成", String.valueOf(ruleInfo.getId()));
-        log.info("执行规则开始");
-        WebSocketServer.sendInfo("执行规则开始", String.valueOf(ruleInfo.getId()));
+        sendInfo("插入数据完成");
+        sendInfo("执行规则开始");
         ksession.fireAllRules();
 
-        log.info("执行规则结束");
-        WebSocketServer.sendInfo("执行规则结束", String.valueOf(ruleInfo.getId()));
+        sendInfo("执行规则结束");
         ksession.dispose();
 
-        log.info("结果存库开始");
-        WebSocketServer.sendInfo("结果存库开始", String.valueOf(ruleInfo.getId()));
+        sendInfo("结果存库开始");
         saveData(datas);
 
-        log.info("结果存库结束");
-        WebSocketServer.sendInfo("结果存库结束", String.valueOf(ruleInfo.getId()));
+        sendInfo("结果存库结束");
     }
 
     /**
@@ -316,6 +315,7 @@ public class RuleExecutor implements Runnable {
             StringBuilder sql = new StringBuilder();
 
             for (Store store : datas) {
+                sendInfo(store.toString());
                 StringBuilder sqlItem = new StringBuilder(ruleInfo.getOutputDataDBInfo().getSql());
                 sqlItem.append(" set integral = ")
                         .append(store.getIntegral())
