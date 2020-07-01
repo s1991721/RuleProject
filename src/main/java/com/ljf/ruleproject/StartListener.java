@@ -35,7 +35,7 @@ public class StartListener implements ApplicationListener<ApplicationReadyEvent>
         RuleInfo ruleInfo = ruleService.getById(ruleId);
         log.info(ruleInfo.toString());
         // 缓存数据
-        dataService.prepareData();
+        dataService.prepareData(ruleInfo);
 
 
     }
