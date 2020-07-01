@@ -1,8 +1,8 @@
 package com.ljf.ruleproject.ruleEngine;
 
-import com.ljf.ruleproject.entity.DBInfo;
 import com.ljf.ruleproject.entity.RuleInfo;
 import com.ljf.ruleproject.poet.Store;
+import com.ljf.ruleproject.service.DataService;
 import com.ljf.ruleproject.ws.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 import org.kie.api.event.process.*;
@@ -11,8 +11,6 @@ import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,20 +20,23 @@ import java.util.List;
 public class RuleExecutor implements Runnable {
 
     private RuleInfo ruleInfo;
+    private DataService dataService;
 
-    public RuleExecutor(RuleInfo ruleInfo) {
+    public RuleExecutor(RuleInfo ruleInfo, DataService dataService) {
         this.ruleInfo = ruleInfo;
+        this.dataService = dataService;
     }
 
-    private void sendInfo(String msg){
+    private void sendInfo(String msg) {
         log.info(msg);
         WebSocketServer.sendInfo(msg, String.valueOf(ruleInfo.getId()));
     }
 
     @Override
     public void run() {
+
         sendInfo("规则开始执行");
-        String rule = getRule();
+        String rule = ruleInfo.getRule();
 
         sendInfo("获取到规则:");
         sendInfo(rule);
@@ -165,7 +166,7 @@ public class RuleExecutor implements Runnable {
             }
         });
 
-        List<Store> datas = getData();
+        List<Store> datas = dataService.getData();
 
         sendInfo("获取到数据，开始插入数据");
         for (Object data : datas) {
@@ -181,167 +182,9 @@ public class RuleExecutor implements Runnable {
         ksession.dispose();
 
         sendInfo("结果存库开始");
-        saveData(datas);
+        dataService.saveData(datas);
 
         sendInfo("结果存库结束");
-    }
-
-    /**
-     * 获取规则
-     *
-     * @return
-     */
-    private String getRule() {
-
-        return ruleInfo.getRule();
-    }
-
-    /**
-     * 获取数据
-     * 通过JavaPoet生成类文件
-     * 后期本地缓存数据
-     *
-     * @return
-     */
-    private List getData() {
-        return getDataFromDB(ruleInfo.getInputDataDBInfo());
-    }
-
-    /**
-     * 从数据库获取数据
-     *
-     * @param dbInfo 数据库信息
-     * @return
-     */
-    private List getDataFromDB(DBInfo dbInfo) {
-
-        Connection dbConn = getDBConnection(dbInfo);
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = dbConn.prepareStatement(dbInfo.getSql());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        ResultSet resultSet = null;
-        try {
-            resultSet = preparedStatement.executeQuery();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        if (resultSet == null) {
-            return null;
-        }
-        //ResultSet 转实体类
-        List dataList = new ArrayList();
-        try {
-            while (resultSet.next()) {
-                Store data = new Store();
-                data.setId(resultSet.getString("id"));
-                data.setSignValue(resultSet.getInt("sign_value"));
-                data.setAttribute(resultSet.getString("attribute"));
-                data.setFigure(resultSet.getString("figure"));
-                data.setSize(resultSet.getString("size"));
-                data.setSales(resultSet.getInt("sales"));
-                data.setReturns(resultSet.getInt("returns"));
-                dataList.add(data);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            try {
-                resultSet.close();
-                preparedStatement.close();
-                dbConn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
-        return dataList;
-    }
-
-    /**
-     * //todo 后期缓存使用
-     *
-     * @return
-     */
-    private List getDataFromCache() {
-
-        return null;
-    }
-
-    /**
-     * DB连接
-     *
-     * @param dbInfo 连接信息
-     * @return
-     */
-    private Connection getDBConnection(DBInfo dbInfo) {
-
-        String driverName = dbInfo.getDriverName();
-
-        String dbURL = dbInfo.getDbURL();
-
-        String userName = dbInfo.getUserName();
-
-        String userPwd = dbInfo.getUserPwd();
-
-        Connection dbConn = null;
-
-        try {
-            Class.forName(driverName);
-            dbConn = DriverManager.getConnection(dbURL, userName, userPwd);
-        } catch (ClassNotFoundException e) {
-            //驱动加载失败
-            e.printStackTrace();
-        } catch (SQLException e) {
-            //连接失败
-            e.printStackTrace();
-        }
-        return dbConn;
-    }
-
-    /**
-     * 执行结果存库
-     *
-     * @param datas 结果数据
-     */
-    private void saveData(List<Store> datas) {
-
-        Connection dbConn = getDBConnection(ruleInfo.getOutputDataDBInfo());
-        PreparedStatement preparedStatement = null;
-
-
-        try {
-            StringBuilder sql = new StringBuilder();
-
-            for (Store store : datas) {
-                sendInfo(store.toString());
-                StringBuilder sqlItem = new StringBuilder(ruleInfo.getOutputDataDBInfo().getSql());
-                sqlItem.append(" set integral = ")
-                        .append(store.getIntegral())
-                        .append(" where id = ")
-                        .append(store.getId())
-                        .append(";")
-                        .append("\n");
-                sql.append(sqlItem);
-            }
-            preparedStatement = dbConn.prepareStatement(sql.toString());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        try {
-            preparedStatement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            try {
-                preparedStatement.close();
-                dbConn.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }
     }
 
 }

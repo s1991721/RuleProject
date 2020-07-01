@@ -14,6 +14,6 @@ public interface DataService {
 
     List<Store> getData();
 
-    boolean saveData();
+    boolean saveData(List<Store> datas);
 
 }

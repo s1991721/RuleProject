@@ -1,6 +1,8 @@
 package com.ljf.ruleproject;
 
 import com.ljf.ruleproject.entity.RuleInfo;
+import com.ljf.ruleproject.ruleEngine.RuleExecutor;
+import com.ljf.ruleproject.ruleEngine.RuleThreadPool;
 import com.ljf.ruleproject.service.DataService;
 import com.ljf.ruleproject.service.RuleService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +41,7 @@ public class StartListener implements ApplicationListener<ApplicationReadyEvent>
 
         // TODO: 2020/7/1 开启定时任务缓存数据
 
+        RuleThreadPool.submit(new RuleExecutor(ruleInfo,dataService));
 
     }
 

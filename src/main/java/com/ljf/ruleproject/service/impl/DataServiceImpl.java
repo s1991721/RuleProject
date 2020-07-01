@@ -62,7 +62,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public boolean saveData() {
+    public boolean saveData(List<Store> datas) {
         String sql = outDBInfo.getSql();
         // TODO: 2020/7/1 自动生成SQL
 

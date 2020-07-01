@@ -61,7 +61,6 @@ public class IndexController {
         outDBInfo.setSql("update store set integral = $1 where id= $2 ;");
         ruleInfo.setOutputDataDBInfo(outDBInfo);
 
-        RuleThreadPool.submit(new RuleExecutor(ruleInfo));
         return "index";
     }
 
@@ -105,7 +104,6 @@ public class IndexController {
         outDBInfo.setSql("update store");
         ruleInfo.setOutputDataDBInfo(outDBInfo);
 
-        RuleThreadPool.submit(new RuleExecutor(ruleInfo));
     }
 
     @GetMapping("/index")
@@ -139,21 +137,17 @@ public class IndexController {
     }
 
     @GetMapping("/execute/{id}")
-    public String execute(Model model, @PathVariable(value = "id") int id){
+    public String execute(Model model, @PathVariable(value = "id") int id) {
         RuleInfo ruleInfo = ruleService.getById(id);
-        model.addAttribute("ruleInfo",ruleInfo);
+        model.addAttribute("ruleInfo", ruleInfo);
         return "execute";
     }
 
     @GetMapping("/realExecute/{id}")
     @ResponseBody
-    public void realExecute(Model model, @PathVariable(value = "id") int id){
+    public void realExecute(Model model, @PathVariable(value = "id") int id) {
         RuleInfo ruleInfo = ruleService.getById(id);
-        RuleThreadPool.submit(new RuleExecutor(ruleInfo));
     }
-
-
-
 
 
 }
