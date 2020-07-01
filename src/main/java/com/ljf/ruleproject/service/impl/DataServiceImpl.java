@@ -25,7 +25,7 @@ public class DataServiceImpl implements DataService {
     private Connection inConnection;
     private Connection outConnection;
 
-    @CachePut(value = "cache", key = "'data:'+#ruleInfo.id")
+    @CachePut(value = "cache", key = "'input_datas'")
     @Override
     public List<Store> getData() {
         String sql = inDBInfo.getSql();

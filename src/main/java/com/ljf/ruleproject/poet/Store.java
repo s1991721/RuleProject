@@ -2,6 +2,8 @@ package com.ljf.ruleproject.poet;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * Created by mr.lin on 2020/6/5
  * 签约标准：店铺属性    签约级别    销售上限
@@ -16,7 +18,7 @@ import lombok.Data;
  * 6、积分和-退货积分
  */
 @Data
-public class Store {
+public class Store implements Serializable {
     private String id;
 
     /**
