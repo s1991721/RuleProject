@@ -4,6 +4,7 @@ import com.ljf.ruleproject.dao.RuleInfoDao;
 import com.ljf.ruleproject.entity.DBInfo;
 import com.ljf.ruleproject.entity.RuleInfo;
 import com.ljf.ruleproject.service.RuleService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -72,8 +73,10 @@ public class RuleServiceImpl implements RuleService {
 //        return ruleInfoDao.findAll();
     }
 
+    @Cacheable(value = "cache", key = "'rule:'+#id")
     @Override
     public RuleInfo getById(Integer id) {
+        System.out.println("========================================");
         return ruleInfoList.get(id);
 //        return ruleInfoDao.getById(id);
     }

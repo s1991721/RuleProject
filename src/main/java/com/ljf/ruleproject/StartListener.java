@@ -38,7 +38,6 @@ public class StartListener implements ApplicationListener<ApplicationReadyEvent>
         dataService.prepareData();
 
 
-
     }
 
 
