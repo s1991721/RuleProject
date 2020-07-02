@@ -8,36 +8,26 @@ import com.squareup.javapoet.TypeSpec;
 import lombok.Data;
 
 import javax.lang.model.element.Modifier;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 
 /**
  * Created by mr.lin on 2020/7/1
+ * 类文件生成
  */
 public class JavaPoet {
 
-    public static void main(String[] args) throws ClassNotFoundException, IOException {
-        new JavaPoet().test();
-    }
+    public static JavaFile createJavaFile(ClassInfo classInfo) throws ClassNotFoundException, IOException {
 
-    private void test() throws ClassNotFoundException, IOException {
-        List<Attr> attrList = new ArrayList<>();
-        Attr a = new Attr();
-        a.setType("java.lang.String");
-        a.setVar("aa");
-        a.setField("_aa");
-        attrList.add(a);
-
-        TypeSpec.Builder builder = TypeSpec.classBuilder("test")
+        TypeSpec.Builder builder = TypeSpec.classBuilder(classInfo.getName())
                 .addModifiers(Modifier.PUBLIC)
                 .addSuperinterface(Class.forName("java.io.Serializable"))
                 .addAnnotation(Data.class)
                 .addJavadoc("Created by mr.lin \nengine by JavaPoet \n");
 
 
-        for (Attr attr : attrList) {
+        for (Attr attr : classInfo.getAttrList()) {
             AnnotationSpec annotationSpec = AnnotationSpec
                     .builder(SQLField.class)
                     .addMember("value", "\"" + attr.getField() + "\"")
@@ -47,13 +37,9 @@ public class JavaPoet {
             builder.addField(fieldSpec);
         }
 
-
-        JavaFile javaFile = JavaFile.builder("com.ljf.ruleproject.poet", builder.build()).build();
-
-        File file = new File("src\\main\\java");
-        javaFile.writeTo(file);
-
+        JavaFile javaFile = JavaFile.builder(classInfo.getPackageName(), builder.build()).build();
         System.out.println(javaFile);
+        return javaFile;
     }
 
 }
