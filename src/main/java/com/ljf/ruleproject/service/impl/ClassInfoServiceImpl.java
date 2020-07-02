@@ -52,4 +52,9 @@ public class ClassInfoServiceImpl implements ClassInfoService {
         classMap.put(classInfo.getName(), clazz);
     }
 
+    @Override
+    public Class<?> getClassByName(String name) {
+        return classMap.get(name);
+    }
+
 }

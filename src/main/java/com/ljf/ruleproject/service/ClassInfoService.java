@@ -7,4 +7,6 @@ public interface ClassInfoService {
 
     void prepareClass();
 
+    Class<?> getClassByName(String name);
+
 }

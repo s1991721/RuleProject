@@ -2,7 +2,7 @@ package com.ljf.ruleproject.service.impl;
 
 import com.ljf.ruleproject.entity.DBInfo;
 import com.ljf.ruleproject.entity.RuleInfo;
-import com.ljf.ruleproject.poet.Store;
+import com.ljf.ruleproject.service.ClassInfoService;
 import com.ljf.ruleproject.service.DataService;
 import com.ljf.ruleproject.util.ResultSetToBean;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.*;
 import java.util.List;
 
@@ -26,9 +27,12 @@ public class DataServiceImpl implements DataService {
     private Connection inConnection;
     private Connection outConnection;
 
+    @Resource
+    private ClassInfoService classInfoService;
+
     @CachePut(value = "cache", key = "'input_datas'")
     @Override
-    public List<Store> getData() {
+    public List getData() {
         String sql = inDBInfo.getSql();
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
@@ -44,12 +48,12 @@ public class DataServiceImpl implements DataService {
             return null;
         }
 
-        List<Store> storeList = null;
+        List storeList = null;
         try {
-            storeList = ResultSetToBean.coverList(resultSet);
-        } catch (SQLException throwables) {
+            storeList = ResultSetToBean.coverList(resultSet, classInfoService.getClassByName(ruleInfo.getTypeName()));
+        } catch (SQLException | IllegalAccessException | InstantiationException exception) {
             log.info("业务数据转换失败");
-            throwables.printStackTrace();
+            exception.printStackTrace();
         }
 
         try {
@@ -64,12 +68,12 @@ public class DataServiceImpl implements DataService {
 
     @Cacheable(value = "cache", key = "'input_datas'")
     @Override
-    public List<Store> getDataFromCache() {
+    public List getDataFromCache() {
         return getData();
     }
 
     @Override
-    public boolean saveData(List<Store> datas) {
+    public boolean saveData(List datas) {
         String sql = outDBInfo.getSql();
         // TODO: 2020/7/1 自动生成SQL
 

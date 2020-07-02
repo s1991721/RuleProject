@@ -15,7 +15,7 @@ public class ClassInfoDao {
 
     public ClassInfo getClassInfo(Integer id) {
         ClassInfo classInfo = new ClassInfo();
-        classInfo.setName("Store1");
+        classInfo.setName("Store");
         classInfo.setPackageName("com.ljf.ruleproject.poet");
 
         List<Attr> attrList = new ArrayList<>();

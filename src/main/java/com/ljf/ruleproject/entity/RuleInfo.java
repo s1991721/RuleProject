@@ -22,4 +22,6 @@ public class RuleInfo implements Serializable {
 
     private DBInfo outputDataDBInfo;
 
+    private String typeName;
+
 }

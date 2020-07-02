@@ -1,7 +1,6 @@
 package com.ljf.ruleproject.ruleEngine;
 
 import com.ljf.ruleproject.entity.RuleInfo;
-import com.ljf.ruleproject.poet.Store;
 import com.ljf.ruleproject.service.DataService;
 import com.ljf.ruleproject.ws.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
@@ -166,7 +165,7 @@ public class RuleExecutor implements Runnable {
             }
         });
 
-        List<Store> datas = dataService.getDataFromCache();
+        List datas = dataService.getDataFromCache();
 
         sendInfo("获取到数据，开始插入数据");
         for (Object data : datas) {

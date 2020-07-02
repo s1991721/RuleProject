@@ -45,6 +45,8 @@ public class StartListener implements ApplicationListener<ApplicationReadyEvent>
         // 缓存数据
         dataService.prepareData(ruleInfo);
 
+        ruleInfo.setTypeName("Store");
+
         RuleThreadPool.submit(new RuleExecutor(ruleInfo, dataService));
 
     }

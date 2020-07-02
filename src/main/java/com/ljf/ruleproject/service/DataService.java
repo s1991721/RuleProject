@@ -1,7 +1,6 @@
 package com.ljf.ruleproject.service;
 
 import com.ljf.ruleproject.entity.RuleInfo;
-import com.ljf.ruleproject.poet.Store;
 
 import java.util.List;
 
@@ -12,10 +11,10 @@ public interface DataService {
 
     void prepareData(RuleInfo ruleInfo);
 
-    List<Store> getData();
+    List getData();
 
-    List<Store> getDataFromCache();
+    List getDataFromCache();
 
-    boolean saveData(List<Store> datas);
+    boolean saveData(List datas);
 
 }
