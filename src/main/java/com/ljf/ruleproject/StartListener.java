@@ -45,8 +45,6 @@ public class StartListener implements ApplicationListener<ApplicationReadyEvent>
         // 缓存数据
         dataService.prepareData(ruleInfo);
 
-        // TODO: 2020/7/1 开启定时任务缓存数据
-
         RuleThreadPool.submit(new RuleExecutor(ruleInfo, dataService));
 
     }
