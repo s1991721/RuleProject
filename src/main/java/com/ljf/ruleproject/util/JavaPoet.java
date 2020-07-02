@@ -8,9 +8,6 @@ import com.squareup.javapoet.TypeSpec;
 import lombok.Data;
 
 import javax.lang.model.element.Modifier;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 
 /**
  * Created by mr.lin on 2020/7/1
@@ -18,7 +15,7 @@ import java.net.URISyntaxException;
  */
 public class JavaPoet {
 
-    public static JavaFile createJavaFile(ClassInfo classInfo) throws ClassNotFoundException, IOException {
+    public static JavaFile createJavaFile(ClassInfo classInfo) throws ClassNotFoundException {
 
         TypeSpec.Builder builder = TypeSpec.classBuilder(classInfo.getName())
                 .addModifiers(Modifier.PUBLIC)

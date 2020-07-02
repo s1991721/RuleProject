@@ -3,6 +3,7 @@ package com.ljf.ruleproject;
 import com.ljf.ruleproject.entity.RuleInfo;
 import com.ljf.ruleproject.ruleEngine.RuleExecutor;
 import com.ljf.ruleproject.ruleEngine.RuleThreadPool;
+import com.ljf.ruleproject.service.ClassInfoService;
 import com.ljf.ruleproject.service.DataService;
 import com.ljf.ruleproject.service.RuleService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,8 @@ public class StartListener implements ApplicationListener<ApplicationReadyEvent>
     RuleService ruleService;
     @Resource
     DataService dataService;
+    @Resource
+    ClassInfoService classInfoService;
 
     @Value(value = "${rule.id}")
     private Integer ruleId;
@@ -37,14 +40,14 @@ public class StartListener implements ApplicationListener<ApplicationReadyEvent>
         RuleInfo ruleInfo = ruleService.getById(ruleId);
         log.info(ruleInfo.toString());
         //加载业务类
-        // TODO: 2020/7/2  加载业务类
+        classInfoService.prepareClass();
 
         // 缓存数据
         dataService.prepareData(ruleInfo);
 
         // TODO: 2020/7/1 开启定时任务缓存数据
 
-        RuleThreadPool.submit(new RuleExecutor(ruleInfo,dataService));
+        RuleThreadPool.submit(new RuleExecutor(ruleInfo, dataService));
 
     }
 

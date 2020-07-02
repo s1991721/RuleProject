@@ -6,7 +6,6 @@ import javax.tools.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -17,7 +16,7 @@ import java.util.Arrays;
  */
 public class ClassCreator {
 
-    public static Object createClass(JavaFile javaFile) throws URISyntaxException, ClassNotFoundException, IllegalAccessException, InstantiationException, IOException, NoSuchMethodException, InvocationTargetException {
+    public static Class<?> createClass(JavaFile javaFile) throws URISyntaxException, ClassNotFoundException {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager standardFileManager = compiler.getStandardFileManager(null, null, null);
         ClassJavaFileManager classJavaFileManager = new ClassJavaFileManager(standardFileManager);
@@ -26,7 +25,7 @@ public class ClassCreator {
         if (task.call()) {
             ClassJavaFileManager.ClassJavaFileObject javaFileObject = classJavaFileManager.getClassJavaFileObject();
             ClassLoader classLoader = new ClassJavaFileManager.MyClassLoader(javaFileObject);
-            Object clazz = classLoader.loadClass(javaFile.typeSpec.name);
+            Class<?> clazz = classLoader.loadClass(javaFile.typeSpec.name);
             return clazz;
         }
         return null;
