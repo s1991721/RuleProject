@@ -27,7 +27,6 @@ public class RuleInfoDao {
         try {
             con = (Connection) DriverManager.getConnection("jdbc:Access:///D:/rule.accdb", "", "");
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } // 连接数据库
 
