@@ -114,15 +114,14 @@ public class ResultSetToBean {
                 Object value = null;
 
                 switch (fieldType.toString()) {
-                    case "java.lang.String":
+                    case "class java.lang.String":
                         value = resultSet.getString(dbField);
                         break;
-                    case "java.lang.Integer":
+                    case "class java.lang.Integer":
                         value = resultSet.getInt(dbField);
                         break;
                 }
 
-                System.out.println("fieldType" + fieldType + "dbField" + dbField);
                 field.setAccessible(true);
                 field.set(data, value);
             }

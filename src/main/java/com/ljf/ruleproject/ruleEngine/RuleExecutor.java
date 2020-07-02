@@ -1,6 +1,7 @@
 package com.ljf.ruleproject.ruleEngine;
 
 import com.ljf.ruleproject.entity.RuleInfo;
+import com.ljf.ruleproject.service.ClassInfoService;
 import com.ljf.ruleproject.service.DataService;
 import com.ljf.ruleproject.ws.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,12 @@ public class RuleExecutor implements Runnable {
 
     private RuleInfo ruleInfo;
     private DataService dataService;
+    private ClassInfoService classInfoService;
 
-    public RuleExecutor(RuleInfo ruleInfo, DataService dataService) {
+    public RuleExecutor(RuleInfo ruleInfo, DataService dataService, ClassInfoService classInfoService) {
         this.ruleInfo = ruleInfo;
         this.dataService = dataService;
+        this.classInfoService = classInfoService;
     }
 
     private void sendInfo(String msg) {
@@ -36,10 +39,12 @@ public class RuleExecutor implements Runnable {
 
         sendInfo("规则开始执行");
         String rule = ruleInfo.getRule();
+        Class businessClass = classInfoService.getClassByName(ruleInfo.getTypeName());
 
         sendInfo("获取到规则:");
         sendInfo(rule);
         KieHelper helper = new KieHelper();
+        helper.setClassLoader(businessClass.getClassLoader());
 
         helper.addContent(rule, ResourceType.DRL);
 
@@ -169,7 +174,7 @@ public class RuleExecutor implements Runnable {
 
         sendInfo("获取到数据，开始插入数据");
         for (Object data : datas) {
-            ksession.insert(data);
+            ksession.insert(businessClass.cast(data));
             sendInfo(data.toString());
         }
 
