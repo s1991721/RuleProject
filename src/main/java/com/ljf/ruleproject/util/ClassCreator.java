@@ -25,7 +25,7 @@ public class ClassCreator {
         if (task.call()) {
             ClassJavaFileManager.ClassJavaFileObject javaFileObject = classJavaFileManager.getClassJavaFileObject();
             ClassLoader classLoader = new ClassJavaFileManager.MyClassLoader(javaFileObject);
-            Class<?> clazz = classLoader.loadClass(javaFile.typeSpec.name);
+            Class<?> clazz = classLoader.loadClass(javaFile.packageName +"."+ javaFile.typeSpec.name);
             return clazz;
         }
         return null;
