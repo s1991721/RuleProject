@@ -14,6 +14,8 @@ public interface DataService {
 
     List<Store> getData();
 
+    List<Store> getDataFromCache();
+
     boolean saveData(List<Store> datas);
 
 }

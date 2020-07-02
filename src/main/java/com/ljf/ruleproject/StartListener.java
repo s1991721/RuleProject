@@ -36,6 +36,9 @@ public class StartListener implements ApplicationListener<ApplicationReadyEvent>
         // 加载规则
         RuleInfo ruleInfo = ruleService.getById(ruleId);
         log.info(ruleInfo.toString());
+        //加载业务类
+        // TODO: 2020/7/2  加载业务类
+
         // 缓存数据
         dataService.prepareData(ruleInfo);
 

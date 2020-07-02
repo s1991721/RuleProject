@@ -166,7 +166,7 @@ public class RuleExecutor implements Runnable {
             }
         });
 
-        List<Store> datas = dataService.getData();
+        List<Store> datas = dataService.getDataFromCache();
 
         sendInfo("获取到数据，开始插入数据");
         for (Object data : datas) {

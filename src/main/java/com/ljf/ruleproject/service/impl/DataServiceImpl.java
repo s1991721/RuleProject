@@ -7,6 +7,7 @@ import com.ljf.ruleproject.service.DataService;
 import com.ljf.ruleproject.util.ResultSetToBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -59,6 +60,12 @@ public class DataServiceImpl implements DataService {
             throwables.printStackTrace();
         }
         return storeList;
+    }
+
+    @Cacheable(value = "cache", key = "'input_datas'")
+    @Override
+    public List<Store> getDataFromCache() {
+        return getData();
     }
 
     @Override
