@@ -33,6 +33,7 @@ public class DataServiceImpl implements DataService {
     @CachePut(value = "cache", key = "'input_datas'")
     @Override
     public List getData() {
+        System.out.println("getData");
         String sql = inDBInfo.getSql();
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
@@ -50,7 +51,10 @@ public class DataServiceImpl implements DataService {
 
         List storeList = null;
         try {
-            storeList = ResultSetToBean.coverList(resultSet, classInfoService.getClassByName(ruleInfo.getTypeName()));
+            Class clazz = classInfoService.getClassByName(ruleInfo.getTypeName());
+            //最底层的classloader
+            Thread.currentThread().setContextClassLoader(clazz.getClassLoader());
+            storeList = ResultSetToBean.coverList(resultSet, clazz);
         } catch (SQLException | IllegalAccessException | InstantiationException exception) {
             log.info("业务数据转换失败");
             exception.printStackTrace();

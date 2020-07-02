@@ -47,7 +47,7 @@ public class StartListener implements ApplicationListener<ApplicationReadyEvent>
 
         ruleInfo.setTypeName("Store");
 
-        RuleThreadPool.submit(new RuleExecutor(ruleInfo, dataService,classInfoService));
+//        RuleThreadPool.submit(new RuleExecutor(ruleInfo, dataService,classInfoService));
 
     }
 
