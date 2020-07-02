@@ -79,7 +79,8 @@ public class DataServiceImpl implements DataService {
     @Override
     public boolean saveData(List datas) {
         String sql = assembleSQL(datas);
-        // TODO: 2020/7/1 自动生成SQL
+
+        log.info("保存数据SQL：{}", sql);
 
         int affect = 0;
         PreparedStatement preparedStatement = null;
