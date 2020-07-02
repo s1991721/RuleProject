@@ -4,7 +4,7 @@ import com.ljf.ruleproject.entity.DBInfo;
 import com.ljf.ruleproject.entity.RuleInfo;
 import com.ljf.ruleproject.service.ClassInfoService;
 import com.ljf.ruleproject.service.DataService;
-import com.ljf.ruleproject.util.ResultSetToBean;
+import com.ljf.ruleproject.util.BusinessClassUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -54,7 +54,7 @@ public class DataServiceImpl implements DataService {
             Class clazz = classInfoService.getClassByName(ruleInfo.getTypeName());
             //最底层的classloader
             Thread.currentThread().setContextClassLoader(clazz.getClassLoader());
-            storeList = ResultSetToBean.coverList(resultSet, clazz);
+            storeList = BusinessClassUtil.coverList(resultSet, clazz);
         } catch (SQLException | IllegalAccessException | InstantiationException exception) {
             log.info("业务数据转换失败");
             exception.printStackTrace();
@@ -78,7 +78,7 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public boolean saveData(List datas) {
-        String sql = outDBInfo.getSql();
+        String sql = assembleSQL(datas);
         // TODO: 2020/7/1 自动生成SQL
 
         int affect = 0;
@@ -98,6 +98,37 @@ public class DataServiceImpl implements DataService {
             throwables.printStackTrace();
         }
         return affect != 0;
+    }
+
+    public String assembleSQL(List datas) {
+        String prefix = outDBInfo.getSql();
+
+        prefix = prefix.trim().toLowerCase();
+
+        StringBuilder sql = new StringBuilder();
+        try {
+            if (prefix.startsWith("update")) {
+                for (Object object : datas) {
+
+                    sql.append(prefix)
+                            .append(BusinessClassUtil.getUpdateSQL(object))
+                            .append("\n");
+
+                }
+            }
+
+            if (prefix.startsWith("insert")) {
+                for (Object object : datas) {
+                    sql.append(prefix)
+                            .append(BusinessClassUtil.getInsertSQL(object))
+                            .append("\n");
+                }
+            }
+        } catch (IllegalAccessException e) {
+            log.error("生成SQL失败");
+            e.printStackTrace();
+        }
+        return sql.toString();
     }
 
     @Override
