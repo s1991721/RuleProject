@@ -3,6 +3,7 @@ package com.ljf.ruleproject.controller;
 import com.ljf.ruleproject.entity.DBInfo;
 import com.ljf.ruleproject.entity.RuleInfo;
 import com.ljf.ruleproject.service.RuleService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
  * Created by mr.lin on 2020/6/24
  */
 @Controller
+@Slf4j
 public class IndexController {
 
     @Resource
@@ -145,6 +147,7 @@ public class IndexController {
     @ResponseBody
     public void realExecute(Model model, @PathVariable(value = "id") int id) {
         RuleInfo ruleInfo = ruleService.getById(id);
+        log.info("执行规则{}",id);
     }
 
 
