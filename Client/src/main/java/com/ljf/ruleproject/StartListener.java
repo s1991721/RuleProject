@@ -1,8 +1,6 @@
 package com.ljf.ruleproject;
 
 import com.ljf.ruleproject.entity.RuleInfo;
-import com.ljf.ruleproject.ruleEngine.RuleExecutor;
-import com.ljf.ruleproject.ruleEngine.RuleThreadPool;
 import com.ljf.ruleproject.service.ClassInfoService;
 import com.ljf.ruleproject.service.DataService;
 import com.ljf.ruleproject.service.RuleService;

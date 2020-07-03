@@ -2,8 +2,6 @@ package com.ljf.ruleproject.controller;
 
 import com.ljf.ruleproject.entity.DBInfo;
 import com.ljf.ruleproject.entity.RuleInfo;
-import com.ljf.ruleproject.ruleEngine.RuleExecutor;
-import com.ljf.ruleproject.ruleEngine.RuleThreadPool;
 import com.ljf.ruleproject.service.RuleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

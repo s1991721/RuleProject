@@ -1,15 +1,9 @@
 package com.ljf.ruleproject.ws;
 
-import com.ljf.ruleproject.entity.DBInfo;
-import com.ljf.ruleproject.entity.RuleInfo;
-import com.ljf.ruleproject.ruleEngine.RuleExecutor;
-import com.ljf.ruleproject.ruleEngine.RuleThreadPool;
-import com.ljf.ruleproject.service.impl.RuleServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
