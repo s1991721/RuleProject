@@ -9,11 +9,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class HttpClient {
 
-    public static final int ConnectTimeOut = 10;//网络超时时间
-    public static final int ReadTimeOut = 30;
-    public static final int WriteTimeOut = 60;
+    private static final int ConnectTimeOut = 10;//网络超时时间
+    private static final int ReadTimeOut = 30;
+    private static final int WriteTimeOut = 60;
 
-    private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    public static OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .connectTimeout(ConnectTimeOut, TimeUnit.SECONDS)
             .readTimeout(ReadTimeOut, TimeUnit.SECONDS)
             .writeTimeout(WriteTimeOut, TimeUnit.SECONDS)

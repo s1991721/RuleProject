@@ -1,12 +1,11 @@
-package com.ljf.ruleproject.sdk;
+package com.ljf.ruleproject.sdk.service;
 
 import com.ljf.ruleproject.sdk.bean.Application;
 import com.ljf.ruleproject.sdk.bean.Instance;
+import com.ljf.ruleproject.sdk.util.HttpClient;
 import okhttp3.Call;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.dom4j.DocumentException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,26 +18,32 @@ import java.util.List;
 /**
  * Created by mr.lin on 2020/7/3
  */
-public class Main {
+public class DiscoverService {
 
-    private static OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
-
-    public static String getXML() throws IOException {
-        Request request = new Request.Builder().url("http://localhost:8080/eureka/apps/").get().build();
-        Call call = okHttpClient.newCall(request);
-        Response response = call.execute();
-        String xml = response.body().string();
-        System.out.println(xml);
-        if (response.isSuccessful()) {
-
-        } else {
-
+    public static Application getServer(String serverName) {
+        List<Application> applicationList;
+        try {
+            applicationList = getAllServers();
+        } catch (Exception e) {
+            System.out.println("服务不可用");
+            e.printStackTrace();
+            return null;
         }
-        return xml;
+        for (Application application : applicationList) {
+            application.getName().equals(serverName);
+            return application;
+        }
+        return null;
     }
 
-    public static void main(String[] args) throws IOException, DocumentException, JSONException {
-
+    /**
+     * 获取所有服务
+     *
+     * @return
+     * @throws JSONException
+     * @throws IOException
+     */
+    private static List<Application> getAllServers() throws JSONException, IOException {
         JSONObject jsonObject = XML.toJSONObject(getXML());
 
         System.out.println(jsonObject.toString());
@@ -63,10 +68,36 @@ public class Main {
             applicationList.add(jsonToApplication(new JSONObject(application)));
         }
 
-        System.out.println(applicationList.toString());
+        return applicationList;
 
     }
 
+    /**
+     * 获取服务列表xml
+     *
+     * @return
+     * @throws IOException
+     */
+    private static String getXML() throws IOException {
+        Request request = new Request.Builder().url("http://localhost:8080/eureka/apps/").get().build();
+        Call call = HttpClient.okHttpClient.newCall(request);
+        Response response = call.execute();
+        String xml = response.body().string();
+        System.out.println(xml);
+        if (response.isSuccessful()) {
+            return xml;
+        } else {
+            throw new RuntimeException("服务中心不可用");
+        }
+    }
+
+    /**
+     * 服务列表xml转json
+     *
+     * @param jsonObject
+     * @return
+     * @throws JSONException
+     */
     private static Application jsonToApplication(JSONObject jsonObject) throws JSONException {
         System.out.println("application 内: " + jsonObject.toString());
         String instance = jsonObject.getString("instance");
@@ -92,7 +123,7 @@ public class Main {
         return application;
     }
 
-    public static Instance jsonToInstance(JSONObject jsonObject) throws JSONException {
+    private static Instance jsonToInstance(JSONObject jsonObject) throws JSONException {
         System.out.println("instance : " + jsonObject.toString());
 
         Instance instance = new Instance();
