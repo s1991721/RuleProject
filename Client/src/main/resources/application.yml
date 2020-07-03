@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   thymeleaf:
     enabled: true  #开启thymeleaf视图解析

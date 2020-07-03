@@ -5,6 +5,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>Client</module>
+        <module>Eureka</module>
     </modules>
 
     <parent>
