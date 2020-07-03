@@ -1,7 +1,14 @@
 server:
   port: 8081
 
+eureka:
+  client:
+    serviceUrl: #注册中心的注册地址
+      defaultZone: http://127.0.0.1:8080/eureka/
+
 spring:
+  application:
+    name: integral_rule
   thymeleaf:
     enabled: true  #开启thymeleaf视图解析
     encoding: utf-8  #编码
@@ -13,7 +20,6 @@ spring:
     type: ehcache
     ehcache:
       config: classpath:ehcache.xml
-
 
 rule:
   id: 0
