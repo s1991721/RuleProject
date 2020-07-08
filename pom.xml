@@ -7,6 +7,7 @@
         <module>Client</module>
         <module>Eureka</module>
         <module>SDK</module>
+        <module>Master</module>
     </modules>
 
     <parent>
