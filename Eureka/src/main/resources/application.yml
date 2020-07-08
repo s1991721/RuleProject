@@ -9,3 +9,5 @@ eureka:
     fetchRegistry: false #是否检索服务
     serviceUrl: #服务注册中心的配置内容，指定服务注册中心的位置
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: false #关闭保护机制
