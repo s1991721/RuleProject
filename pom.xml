@@ -8,6 +8,7 @@
         <module>Eureka</module>
         <module>SDK</module>
         <module>Master</module>
+        <module>Base</module>
     </modules>
 
     <parent>
