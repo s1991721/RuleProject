@@ -12,5 +12,20 @@
     <artifactId>Base</artifactId>
     <description>通用型服务模板</description>
 
+    <dependencies>
+        <!-- mybatis-plus 代码生成器-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
+        <!-- mybatis-plus 代码生成器所需的模板-->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
