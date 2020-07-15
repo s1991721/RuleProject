@@ -1,4 +1,4 @@
-package com.ljf.ruleproject.base;
+package com.ljf.ruleproject.base.autoconfig;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

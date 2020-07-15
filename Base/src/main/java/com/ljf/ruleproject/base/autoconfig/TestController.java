@@ -1,5 +1,7 @@
-package com.ljf.ruleproject.base;
+package com.ljf.ruleproject.base.autoconfig;
 
+import com.ljf.ruleproject.base.autoconfig.AppConfig;
+import com.ljf.ruleproject.base.autoconfig.TestJavaConfigBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
