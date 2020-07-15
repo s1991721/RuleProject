@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +17,15 @@ import java.util.List;
 /**
  * Created by mr.lin on 2020/7/10
  */
+@EnableApolloConfig
+@SpringBootApplication
 public class BaseApplication {
 
     public static void main(String[] args) {
+        SpringApplication.run(BaseApplication.class, args);
+    }
 
+    private static void mp() {
         System.out.println("MybatisPlusGenerator 开始");
 
         String projectPath = "D:/generator";
