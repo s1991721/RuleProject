@@ -1,15 +1,31 @@
 #启用Apoilo配置
-apollo:
-  bootstrap:
-    enabled: true
-    namespaces: TEST1.ABCD
-  meta: http://192.168.99.100:8080/
-#appID
-app:
-  id: test
-# 这里的配置环境变量不生效
-env: DEV
-#apollo服务地址 如果这里指定了服务地址，就只会从这里拉取数据，这是最坑爹的，运维发布的时候还是让他们把service信息填入到System Property中，这样是最安全的
+#apollo:
+#  bootstrap:
+#    enabled: true
+#    namespaces: TEST1.ABCD
+#  meta: http://192.168.99.100:8080/
+##appID
+#app:
+#  id: test
+## 这里的配置环境变量不生效
+#env: DEV
+##apollo服务地址 如果这里指定了服务地址，就只会从这里拉取数据，这是最坑爹的，运维发布的时候还是让他们把service信息填入到System Property中，这样是最安全的
 
 
+spring:
+  cache:
+    type: ehcache
+    ehcache:
+      config: classpath:ehcache.xml
 
+#  redis:
+#    host:
+#    port: 6379
+#    password:
+#    lettuce:
+#      pool:
+#        max-active: 10  #最大活跃连接数
+#        max-idle: 5  #最大空闲连接数
+#        max-wait: -1  #最长等待时间。-1不等待
+#        min-idle: 0  #最小空闲数0
+#    timeout: 300  #连接超时时间
