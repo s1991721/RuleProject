@@ -1,7 +1,5 @@
 package com.ljf.ruleproject.base.cache;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
@@ -39,12 +37,9 @@ public class UserServiceImpl {
             return user;
         }
         //如果redis有则直接返回，如果redis 没有则查询数据
-        String cacheStr = redisServiceComponent.get(name) == null ? null : JSON.toJSONString(redisServiceComponent.get(name));
+        user = (User) redisServiceComponent.get(name);
         //如果数据库查询不为空则，则讲返回结果缓存到本地和redis缓存中
-        if (!StringUtils.isEmpty(cacheStr)) {
-            //reids不为空从reids中拿
-            JSONObject object = JSON.parseObject(cacheStr);
-            user = JSONObject.toJavaObject(object, User.class);
+        if (user != null) {
             System.out.println("我是从redis中查出来的: ======= >>>" + name);
             return user;
         }
