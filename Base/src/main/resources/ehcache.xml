@@ -19,9 +19,14 @@
     <!-- demo缓存 --><!-- name="userCache" 对应我们在 @CacheConfig(cacheNames={"userCache"}) ！！！！！ -->
     <!--Ehcache底层也是用Map集合实现的 -->
     <cache name="userCache" maxElementsInMemory="1000" eternal="false"
-           timeToIdleSeconds="10" timeToLiveSeconds="10" overflowToDisk="true"
+           timeToIdleSeconds="180" timeToLiveSeconds="600" overflowToDisk="true"
            diskSpoolBufferSizeMB="30" maxElementsOnDisk="10000000"
            diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
            memoryStoreEvictionPolicy="LRU">  <!-- LRU缓存策略 -->
     </cache>
+    <!-- 总存活timeToLiveSeconds 600秒，若访问一次间隔 timeToIdleSeconds 180秒内没有访问，则失效；timeToLiveSeconds > timeToIdleSeconds
+    diskSpoolBufferSizeMB 磁盘缓存区大小
+    diskPersistent 磁盘持久化
+    diskExpiryThreadIntervalSeconds 磁盘缓存清理间隔
+    -->
 </ehcache>
