@@ -30,3 +30,11 @@ spring:
         max-wait: -1  #最长等待时间。-1不等待
         min-idle: 0  #最小空闲数0
     timeout: 300  #连接超时时间
+
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 500
