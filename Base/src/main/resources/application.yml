@@ -31,6 +31,16 @@ spring:
         min-idle: 0  #最小空闲数0
     timeout: 300  #连接超时时间
 
+  zipkin:
+    base-url: http://192.168.99.100:9411/
+    sender:
+      type: web
+
+  sleuth:
+    sampler:
+      probability: 1
+
+
 
 feign:
   client:

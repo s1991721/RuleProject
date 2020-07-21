@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * Created by mr.lin on 2020/7/16
  */
-@FeignClient
+@FeignClient("test")
 public interface MFeignClient {
 
     @GetMapping("/getCache")
